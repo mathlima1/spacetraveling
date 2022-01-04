@@ -2,4 +2,24 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 2rem;
+    .info{
+        display: flex;
+        align-items: center;
+        color: var(--Gray-90);
+        
+        div{
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            margin-right:1.75rem;
+            svg{
+                width: 1.2rem;height: 1.2rem;
+            }
+            span{
+                font-size: 0.875rem;
+                margin-left: .5rem;
+                text-transform:capitalize;
+            }
+        }
+    }
 }

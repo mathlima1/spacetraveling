@@ -91,7 +91,7 @@ export default function Home(props: HomeProps) {
                 <a>
                   <h2>{post.data.title}</h2>
                   <h4>{post.data.subtitle}</h4>
-                  <div className={styles.info}>
+                  <div className={commonStyles.info}>
                     <div>
                       <FiCalendar />
                       <span>{post.first_publication_date}</span>
@@ -121,7 +121,7 @@ export const getStaticProps: GetStaticProps = async () => {
   ],
     {
       fetch: ['postagem'],
-      pageSize: 1,
+      pageSize: 5,
 
     });
 
