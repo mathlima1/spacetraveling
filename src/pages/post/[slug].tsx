@@ -1,11 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from "next/head";
 import { useRouter } from "next/router";
+
 import { FiCalendar, FiUser, FiClock } from "react-icons/fi";
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import { useState, useEffect } from 'react'
 
+import { RichText } from 'prismic-dom'
 import { getPrismicClient } from '../../services/prismic';
 import Prismic from '@prismicio/client'
 
@@ -37,6 +38,18 @@ export default function Post(props: PostProps) {
   const { post } = props;
   const router = useRouter();
 
+  const numberOfWords = post.data.content.reduce((acc, item) => {
+    const wordsOnHeading = item.heading?.split(" ");
+    const wordsOnBody = RichText.asText(item.body).split(" ");
+    acc.numberOfWordsOnBody = acc.numberOfWordsOnBody + wordsOnBody.length;
+    acc.numberOfWordsOnHeading = acc.numberOfWordsOnHeading + wordsOnHeading?.length;
+
+    return acc
+  }, { numberOfWordsOnBody: 0, numberOfWordsOnHeading: 0 })
+
+
+  let timeToRead = Math.ceil((numberOfWords.numberOfWordsOnBody + numberOfWords.numberOfWordsOnHeading) / 200);
+
   if (router.isFallback) {
     return (
       <main className={commonStyles.container}>
@@ -49,7 +62,7 @@ export default function Post(props: PostProps) {
       <Head>
         <title>{post.data.title} | Spacetraveling</title>
       </Head>
-      <div className={styles.postBanner} style={{ backgroundImage: 'url(https://lirp.cdn-website.com/3775339c/dms3rep/multi/opt/Pessoa+vendo+a+cria%C3%A7%C3%A3o+de+site-1920w.jpg)' }} />
+      <div className={styles.postBanner} style={{ backgroundImage: `url(${post.data.banner.url})` }} />
       <main className={commonStyles.container}>
         <article className={styles.postContainer}>
           <h1>{post.data.title}</h1>
@@ -70,7 +83,7 @@ export default function Post(props: PostProps) {
             </div>
             <div>
               <FiClock />
-              <span>4 min</span>
+              <span style={{ textTransform: 'lowercase' }}>{timeToRead} min</span>
             </div>
           </div>
           <div className={styles.contentWrap}>
@@ -101,7 +114,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   ],
     {
       fetch: ['postagem'],
-      pageSize: 2,
+      pageSize: 5,
 
     });
 
