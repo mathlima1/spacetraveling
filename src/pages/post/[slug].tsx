@@ -38,7 +38,6 @@ export default function Post(props: PostProps) {
   const router = useRouter();
 
   if (router.isFallback) {
-    console.log('Carregando...')
     return (
       <main className={commonStyles.container}>
         <h1>Carregando...</h1>
