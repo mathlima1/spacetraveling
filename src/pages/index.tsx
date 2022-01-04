@@ -105,8 +105,8 @@ export default function Home(props: HomeProps) {
               </Link>
             )
           })}
+          {nextPage != null ? <button onClick={handleGoToNextPage}>Carregar mais posts</button> : ''}
         </div>
-        {nextPage != null ? <button onClick={handleGoToNextPage}>Carregar mais posts</button> : ''}
       </section>
     </>
 

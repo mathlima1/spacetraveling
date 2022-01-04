@@ -35,4 +35,15 @@
             }
         }
     }
+    button{
+        background-color: transparent;
+        border:none;
+        color: var(--Pink);
+        font-weight: bold;
+        font-size: 1.2rem;
+        transition: filter 0.5s;
+        &:hover{
+            filter: brightness(0.85);
+        }
+    }
 }
